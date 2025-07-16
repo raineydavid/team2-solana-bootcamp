@@ -1225,10 +1225,6 @@ We welcome contributions to enhance ChainSure's privacy features:
 - Document privacy implications
 - Ensure backward compatibility
 
-## 📜 License
-
-This project is licensed under the MIT License with additional privacy clauses - see the [LICENSE](LICENSE) file for details.
-
 ## ⚠️ Disclaimers
 
 - **Experimental Technology**: Zero-knowledge proofs and confidential computing are rapidly evolving
@@ -1244,5 +1240,18 @@ This project is licensed under the MIT License with additional privacy clauses -
 - **Security Issues**: security-reports@chainsure.io (GPG encrypted)
 
 ---
+
+## 📜 License
+
+Copyright (c) [2025] [Rainey David]
+
+All rights reserved.
+
+This source code is made available solely for inspection and audit purposes.
+No permission is granted to copy, modify, use, compile, or distribute this code
+in any form, in whole or in part, without explicit written permission from the author.
+
+This code is provided for review only and may not be used in any software product,
+service, or other application.
 
 **ChainSure Confidential** - Protecting your privacy while securing your future 🔒🛡️
