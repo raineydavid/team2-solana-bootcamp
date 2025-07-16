@@ -22,7 +22,7 @@ import {
 } from '../instructions';
 
 export const ENCODESOLANAPROJECT_PROGRAM_ADDRESS =
-  'JAVuBXeBZqXNtS73azhBDAoYaaAFfo4gWXoZe2e7Jf8H' as Address<'JAVuBXeBZqXNtS73azhBDAoYaaAFfo4gWXoZe2e7Jf8H'>;
+  'FhZ9uosXTYBmMDFa6FZqiacK79VBW6PDpeDmvKLzj8ag' as Address<'FhZ9uosXTYBmMDFa6FZqiacK79VBW6PDpeDmvKLzj8ag'>;
 
 export enum EncodesolanaprojectAccount {
   Encodesolanaproject,
@@ -36,7 +36,7 @@ export function identifyEncodesolanaprojectAccount(
     containsBytes(
       data,
       fixEncoderSize(getBytesEncoder(), 8).encode(
-        new Uint8Array([255, 176, 4, 245, 188, 253, 124, 25])
+        new Uint8Array([30, 208, 163, 68, 226, 207, 208, 33])
       ),
       0
     )
@@ -121,7 +121,7 @@ export function identifyEncodesolanaprojectInstruction(
 }
 
 export type ParsedEncodesolanaprojectInstruction<
-  TProgram extends string = 'JAVuBXeBZqXNtS73azhBDAoYaaAFfo4gWXoZe2e7Jf8H',
+  TProgram extends string = 'FhZ9uosXTYBmMDFa6FZqiacK79VBW6PDpeDmvKLzj8ag',
 > =
   | ({
       instructionType: EncodesolanaprojectInstruction.Close;

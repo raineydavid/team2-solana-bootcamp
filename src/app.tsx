@@ -3,10 +3,9 @@ import { AppLayout } from '@/components/app-layout.tsx'
 import { AppRoutes } from '@/app-routes.tsx'
 
 const links: { label: string; path: string }[] = [
-  //
   { label: 'Home', path: '/' },
-  { label: 'Account', path: '/account' },
-  { label: 'Encodesolanaproject Program', path: '/encodesolanaproject' },
+  { label: 'Account Explorer', path: '/account' },
+  { label: 'Insurance', path: '/encodesolanaproject' },
 ]
 
 export function App() {

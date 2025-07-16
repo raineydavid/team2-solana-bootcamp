@@ -11,22 +11,11 @@ const links: { label: string; href: string }[] = [
 export default function DashboardFeature() {
   return (
     <div>
-      <AppHero title="gm" subtitle="Say hi to your new Solana app." />
+      <AppHero title="gm 👋" subtitle="Encode x Solana bootcamp project: Solana Parametric insurance" />
       <div className="max-w-xl mx-auto py-6 sm:px-6 lg:px-8 text-center">
         <div className="space-y-2">
-          <p>Here are some helpful links to get you started.</p>
-          {links.map((link, index) => (
-            <div key={index}>
-              <a
-                href={link.href}
-                className="hover:text-gray-500 dark:hover:text-gray-300"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {link.label}
-              </a>
-            </div>
-          ))}
+          <p>This is a basic example of a parametric insurance service running on Solana</p>
+          <p>The application uses <a className="font-medium text-blue-600 dark:text-blue-500 hover:underline" href="https://ondemand.switchboard.xyz/">Switchboard</a> as an Oracle, which provides weather information</p>
         </div>
       </div>
     </div>

@@ -110,7 +110,11 @@ export function getInitializeInstruction<
   TAccountSystemProgram extends string,
   TProgramAddress extends Address = typeof ENCODESOLANAPROJECT_PROGRAM_ADDRESS,
 >(
-  input: InitializeInput<TAccountPayer, TAccountEncodesolanaproject, TAccountSystemProgram>,
+  input: InitializeInput<
+    TAccountPayer,
+    TAccountEncodesolanaproject,
+    TAccountSystemProgram
+  >,
   config?: { programAddress?: TProgramAddress }
 ): InitializeInstruction<
   TProgramAddress,
@@ -119,12 +123,16 @@ export function getInitializeInstruction<
   TAccountSystemProgram
 > {
   // Program address.
-  const programAddress = config?.programAddress ?? ENCODESOLANAPROJECT_PROGRAM_ADDRESS;
+  const programAddress =
+    config?.programAddress ?? ENCODESOLANAPROJECT_PROGRAM_ADDRESS;
 
   // Original accounts.
   const originalAccounts = {
     payer: { value: input.payer ?? null, isWritable: true },
-    encodesolanaproject: { value: input.encodesolanaproject ?? null, isWritable: true },
+    encodesolanaproject: {
+      value: input.encodesolanaproject ?? null,
+      isWritable: true,
+    },
     systemProgram: { value: input.systemProgram ?? null, isWritable: false },
   };
   const accounts = originalAccounts as Record<

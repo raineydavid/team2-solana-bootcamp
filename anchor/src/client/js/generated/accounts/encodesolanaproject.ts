@@ -36,14 +36,19 @@ import {
 } from 'gill';
 
 export const ENCODESOLANAPROJECT_DISCRIMINATOR = new Uint8Array([
-  255, 176, 4, 245, 188, 253, 124, 25,
+  30, 208, 163, 68, 226, 207, 208, 33,
 ]);
 
 export function getEncodesolanaprojectDiscriminatorBytes() {
-  return fixEncoderSize(getBytesEncoder(), 8).encode(ENCODESOLANAPROJECT_DISCRIMINATOR);
+  return fixEncoderSize(getBytesEncoder(), 8).encode(
+    ENCODESOLANAPROJECT_DISCRIMINATOR
+  );
 }
 
-export type Encodesolanaproject = { discriminator: ReadonlyUint8Array; count: number };
+export type Encodesolanaproject = {
+  discriminator: ReadonlyUint8Array;
+  count: number;
+};
 
 export type EncodesolanaprojectArgs = { count: number };
 
@@ -64,8 +69,14 @@ export function getEncodesolanaprojectDecoder(): Decoder<Encodesolanaproject> {
   ]);
 }
 
-export function getEncodesolanaprojectCodec(): Codec<EncodesolanaprojectArgs, Encodesolanaproject> {
-  return combineCodec(getEncodesolanaprojectEncoder(), getEncodesolanaprojectDecoder());
+export function getEncodesolanaprojectCodec(): Codec<
+  EncodesolanaprojectArgs,
+  Encodesolanaproject
+> {
+  return combineCodec(
+    getEncodesolanaprojectEncoder(),
+    getEncodesolanaprojectDecoder()
+  );
 }
 
 export function decodeEncodesolanaproject<TAddress extends string = string>(
@@ -76,24 +87,34 @@ export function decodeEncodesolanaproject<TAddress extends string = string>(
 ): MaybeAccount<Encodesolanaproject, TAddress>;
 export function decodeEncodesolanaproject<TAddress extends string = string>(
   encodedAccount: EncodedAccount<TAddress> | MaybeEncodedAccount<TAddress>
-): Account<Encodesolanaproject, TAddress> | MaybeAccount<Encodesolanaproject, TAddress> {
+):
+  | Account<Encodesolanaproject, TAddress>
+  | MaybeAccount<Encodesolanaproject, TAddress> {
   return decodeAccount(
     encodedAccount as MaybeEncodedAccount<TAddress>,
     getEncodesolanaprojectDecoder()
   );
 }
 
-export async function fetchEncodesolanaproject<TAddress extends string = string>(
+export async function fetchEncodesolanaproject<
+  TAddress extends string = string,
+>(
   rpc: Parameters<typeof fetchEncodedAccount>[0],
   address: Address<TAddress>,
   config?: FetchAccountConfig
 ): Promise<Account<Encodesolanaproject, TAddress>> {
-  const maybeAccount = await fetchMaybeEncodesolanaproject(rpc, address, config);
+  const maybeAccount = await fetchMaybeEncodesolanaproject(
+    rpc,
+    address,
+    config
+  );
   assertAccountExists(maybeAccount);
   return maybeAccount;
 }
 
-export async function fetchMaybeEncodesolanaproject<TAddress extends string = string>(
+export async function fetchMaybeEncodesolanaproject<
+  TAddress extends string = string,
+>(
   rpc: Parameters<typeof fetchEncodedAccount>[0],
   address: Address<TAddress>,
   config?: FetchAccountConfig
@@ -107,7 +128,11 @@ export async function fetchAllEncodesolanaproject(
   addresses: Array<Address>,
   config?: FetchAccountsConfig
 ): Promise<Account<Encodesolanaproject>[]> {
-  const maybeAccounts = await fetchAllMaybeEncodesolanaproject(rpc, addresses, config);
+  const maybeAccounts = await fetchAllMaybeEncodesolanaproject(
+    rpc,
+    addresses,
+    config
+  );
   assertAccountsExist(maybeAccounts);
   return maybeAccounts;
 }
@@ -118,7 +143,9 @@ export async function fetchAllMaybeEncodesolanaproject(
   config?: FetchAccountsConfig
 ): Promise<MaybeAccount<Encodesolanaproject>[]> {
   const maybeAccounts = await fetchEncodedAccounts(rpc, addresses, config);
-  return maybeAccounts.map((maybeAccount) => decodeEncodesolanaproject(maybeAccount));
+  return maybeAccounts.map((maybeAccount) =>
+    decodeEncodesolanaproject(maybeAccount)
+  );
 }
 
 export function getEncodesolanaprojectSize(): number {

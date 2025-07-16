@@ -101,11 +101,15 @@ export function getSetInstruction<
   config?: { programAddress?: TProgramAddress }
 ): SetInstruction<TProgramAddress, TAccountEncodesolanaproject> {
   // Program address.
-  const programAddress = config?.programAddress ?? ENCODESOLANAPROJECT_PROGRAM_ADDRESS;
+  const programAddress =
+    config?.programAddress ?? ENCODESOLANAPROJECT_PROGRAM_ADDRESS;
 
   // Original accounts.
   const originalAccounts = {
-    encodesolanaproject: { value: input.encodesolanaproject ?? null, isWritable: true },
+    encodesolanaproject: {
+      value: input.encodesolanaproject ?? null,
+      isWritable: true,
+    },
   };
   const accounts = originalAccounts as Record<
     keyof typeof originalAccounts,

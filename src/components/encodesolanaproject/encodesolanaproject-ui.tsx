@@ -90,7 +90,7 @@ export function EncodesolanaprojectButtonInitialize() {
 
   return (
     <Button onClick={() => mutationInitialize.mutateAsync()} disabled={mutationInitialize.isPending}>
-      Initialize Encodesolanaproject {mutationInitialize.isPending && '...'}
+      Initialize Smart Contract {mutationInitialize.isPending && '...'}
     </Button>
   )
 }

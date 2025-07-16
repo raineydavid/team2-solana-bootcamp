@@ -2,69 +2,61 @@
 
 use anchor_lang::prelude::*;
 
-declare_id!("JAVuBXeBZqXNtS73azhBDAoYaaAFfo4gWXoZe2e7Jf8H");
+mod error;
+use error::*;
+mod policy;
+use policy::*;
+mod account_contexts;
+use account_contexts::*;
+
+declare_id!("FhZ9uosXTYBmMDFa6FZqiacK79VBW6PDpeDmvKLzj8ag");
 
 #[program]
-pub mod encodesolanaproject {
+pub mod parametric_insurance {
     use super::*;
 
-    pub fn close(_ctx: Context<CloseEncodesolanaproject>) -> Result<()> {
+    pub fn create_policy(ctx: Context<CreatePolicy>, threshold: f64, duration_slots: u64) -> Result<()> {
+        let clock = Clock::get()?;
+        let policy = &mut ctx.accounts.policy;
+
+        policy.authority = *ctx.accounts.authority.key;
+        policy.start_slot = clock.slot;
+        policy.expiration_slot = clock.slot + duration_slots;
+        policy.threshold = threshold;
+        policy.claimed = false;
+
         Ok(())
     }
 
-    pub fn decrement(ctx: Context<Update>) -> Result<()> {
-        ctx.accounts.encodesolanaproject.count = ctx.accounts.encodesolanaproject.count.checked_sub(1).unwrap();
+    pub fn claim_payout(ctx: Context<ClaimPayout>) -> Result<()> {
+        let clock = Clock::get()?;
+        let policy = &mut ctx.accounts.policy;
+
+        // Check ownership
+        require_keys_eq!(policy.authority, ctx.accounts.authority.key(), InsuranceError::Unauthorized);
+
+        // Check time
+        require!(clock.slot >= policy.start_slot, InsuranceError::TooEarly);
+        require!(clock.slot <= policy.expiration_slot, InsuranceError::Expired);
+
+        // Check already claimed
+        require!(!policy.claimed, InsuranceError::AlreadyClaimed);
+
+        // === NEW: Read temperature from Function Result Account ===
+        let result_data = ctx.accounts.function_result.try_borrow_data()?;
+        let temp_bytes = &result_data[8..16]; // Adjust offset if needed
+        let temperature = f64::from_le_bytes(temp_bytes.try_into().map_err(|_| error!(InsuranceError::InvalidResultFormat))?);
+
+        // Check condition met
+        require!(temperature > policy.threshold, InsuranceError::ConditionNotMet);
+
+        // Payout (transfer from vault to user - simplified)
+        let amount = 1_000_000; // 0.001 SOL
+        **ctx.accounts.vault.try_borrow_mut_lamports()? -= amount;
+        **ctx.accounts.authority.try_borrow_mut_lamports()? += amount;
+
+        policy.claimed = true;
+
         Ok(())
     }
-
-    pub fn increment(ctx: Context<Update>) -> Result<()> {
-        ctx.accounts.encodesolanaproject.count = ctx.accounts.encodesolanaproject.count.checked_add(1).unwrap();
-        Ok(())
-    }
-
-    pub fn initialize(_ctx: Context<InitializeEncodesolanaproject>) -> Result<()> {
-        Ok(())
-    }
-
-    pub fn set(ctx: Context<Update>, value: u8) -> Result<()> {
-        ctx.accounts.encodesolanaproject.count = value.clone();
-        Ok(())
-    }
-}
-
-#[derive(Accounts)]
-pub struct InitializeEncodesolanaproject<'info> {
-    #[account(mut)]
-    pub payer: Signer<'info>,
-
-    #[account(
-  init,
-  space = 8 + Encodesolanaproject::INIT_SPACE,
-  payer = payer
-    )]
-    pub encodesolanaproject: Account<'info, Encodesolanaproject>,
-    pub system_program: Program<'info, System>,
-}
-#[derive(Accounts)]
-pub struct CloseEncodesolanaproject<'info> {
-    #[account(mut)]
-    pub payer: Signer<'info>,
-
-    #[account(
-  mut,
-  close = payer, // close account and return lamports to payer
-    )]
-    pub encodesolanaproject: Account<'info, Encodesolanaproject>,
-}
-
-#[derive(Accounts)]
-pub struct Update<'info> {
-    #[account(mut)]
-    pub encodesolanaproject: Account<'info, Encodesolanaproject>,
-}
-
-#[account]
-#[derive(InitSpace)]
-pub struct Encodesolanaproject {
-    count: u8,
 }
