@@ -2,6 +2,7 @@
 
 **Zero-Knowledge Decentralized Insurance Protocol on Solana**  
 *Ultimate Bootcamp Capstone: ZKP + NFT + DePIN + Confidential Computing*
+![ChainSure](./chainsure-cover.png)
 
 ChainSure Confidential demonstrates **every advanced Solana concept** through a production-ready privacy-preserving insurance platform featuring Zero-Knowledge Proofs, NFT-based credentials, DePIN integration, and Anchor framework mastery.
 
